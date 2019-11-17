@@ -1,24 +1,40 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This run this application, please have docker installed.
 
-Things you may want to cover:
+#### Run:
 
-* Ruby version
+```
+docker-compose build
+docker-compose up
+```
 
-* System dependencies
+#### In another terminal, run:
 
-* Configuration
+```
+docker-compose run web rails db:create
+docker-compose run web rails db:seed
+```
 
-* Database creation
 
-* Database initialization
+#### Query with cUrl:
 
-* How to run the test suite
+##### all results
+```
+curl -i -H "Accept: application/json" http://localhost:3000/dns_records\?page\=1
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+##### exclude some
+```
+curl -i -H "Accept: application/json" http://localhost:3000/dns_records\?page\=1\&excluded\[\]\=\ipsum.com
+```
 
-* Deployment instructions
+##### include some
+```
+curl -i -H "Accept: application/json" http://localhost:3000/dns_records\?page\=1\&included\[\]\=\ipsum.com
+```
 
-* ...
+#### Create (POST) with cUrl
+```
+curl --data "dns_record[ip]=8.8.8.8&dns_record[hostnames_attributes][hostname]=ipsum.com" http://localhost:3000/dns_records
+```

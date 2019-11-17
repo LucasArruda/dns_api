@@ -20,7 +20,7 @@ class DnsRecordsController < ApplicationController
 
   private
     def dns_record_params
-      params.require(:dns_record).permit(:ip, :ip_address, hostnames_attributes: {})
+      params.require(:dns_record).permit(:ip, :ip_address, hostnames_attributes: [])
     end
 
     def fetch_params
