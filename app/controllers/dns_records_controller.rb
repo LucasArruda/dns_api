@@ -1,8 +1,8 @@
 class DnsRecordsController < ApplicationController
   def index
-    @dns_records = DnsRecord.all
+    @dns_records = DnsRecord.joins(:hostnames).all
 
-    render json: @dns_records
+    render json: DnsRecordsPresenter.new(dns_records: @dns_records).to_json
   end
   def create
     @dns_record = DnsRecord.new(dns_record_params)
