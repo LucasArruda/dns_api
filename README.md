@@ -16,8 +16,18 @@ docker-compose run web rails db:create
 docker-compose run web rails db:seed
 ```
 
+#### Running specs
+
+While server is up (`docker-compose up`), run:
+
+```
+docker-compose run web rails test
+```
+
 
 #### Query with cUrl:
+
+While server is up (`docker-compose up`), you can do all below
 
 ##### all results
 ```
