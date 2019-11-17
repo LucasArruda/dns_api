@@ -39,6 +39,10 @@ class DnsRecordsController < ApplicationController
           )
         end
 
+        result = result.where(
+          hostnames: { hostname: included }
+        ) if included.present?
+
         # included_records = if included.present?
         #   result.where(
         #     hostnames: { hostname: included }
