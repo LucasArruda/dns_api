@@ -74,7 +74,7 @@ class DnsRecordsControllerTest < ActionDispatch::IntegrationTest
           dns_record: {
             ip: @dns_record.ip_address,
             hostnames_attributes: {
-
+              hostname: 'amet.com'
             }
           }
         }, as: :json
@@ -88,7 +88,7 @@ class DnsRecordsControllerTest < ActionDispatch::IntegrationTest
         dns_record: {
           ip: @dns_record.ip_address,
           hostnames_attributes: {
-
+            hostname: 'amet.com'
           }
         }
       }, as: :json
