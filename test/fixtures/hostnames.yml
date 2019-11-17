@@ -7,3 +7,11 @@ one:
 two:
   hostname: lorem.com
   dns_record: two
+
+three:
+  hostname: ipsum.com
+  dns_record: two
+
+four:
+  hostname: dolor.com
+  dns_record: two
