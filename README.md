@@ -13,6 +13,7 @@ docker-compose up
 
 ```
 docker-compose run web rails db:create
+docker-compose run web rails db:migrates
 docker-compose run web rails db:seed
 ```
 
