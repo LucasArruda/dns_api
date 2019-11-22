@@ -42,7 +42,7 @@ class DnsRecordsControllerTest < ActionDispatch::IntegrationTest
     assert response['related_hostnames'].size == 3
   end
 
-  test "index excludes dns records correctly" do
+  test "index excludes a hostname" do
     get dns_records_url(params: { page: 1, excluded: ['ipsum.com'] }), as: :json
 
     response = JSON.parse(@response.body)
@@ -53,20 +53,39 @@ class DnsRecordsControllerTest < ActionDispatch::IntegrationTest
   end
 
   # test "index includes dns records correctly" do
-  #   @other_dns_record = dns_records(:two)
-  #   @hostname_1 = hostnames(:one)
-  #   @hostname_2 = hostnames(:two)
-  #
-  #   get dns_records_url(params: { page: 1, included: ['lorem.com', 'ipsum.com'] }), as: :json
-  #
-  #   response = JSON.parse(@response.body)
-  #
-  #   assert response['total_records'] == 1
-  #   assert response['records'].size == 1
-  #   assert response['records'].first['ip_address'] == @other_dns_record.ip_address
-  #   assert response['related_hostnames'].first['hostname'] == @hostname_1.hostname
-  #   assert response['related_hostnames'].first['hostname'] == @hostname_2.hostname
-  # end
+  test "index excludes multiple hostnames" do
+    get dns_records_url(params: { page: 1, excluded: ['lorem.com', 'ipsum.com'] }), as: :json
+
+    response = JSON.parse(@response.body)
+
+    assert response['total_records'] == 0
+    assert response['records'].size == 0
+  end
+
+  test "index includes dns records correctly" do
+    @other_dns_record = dns_records(:two)
+
+    get dns_records_url(params: { page: 1, included: ['lorem.com', 'ipsum.com'] }), as: :json
+
+    response = JSON.parse(@response.body)
+
+    assert response['total_records'] == 1
+    assert response['records'].size == 1
+    assert response['records'].first['ip_address'] == @other_dns_record.ip_address
+  end
+
+  test "index includes and excludes dns records correctly" do
+    get dns_records_url(params: {
+      page: 1, included: ['lorem.com'], excluded: ['dolor.com'] }
+    ), as: :json
+
+    response = JSON.parse(@response.body)
+
+    assert response['total_records'] == 1
+    assert response['records'].size == 1
+    assert response['records'].first['ip_address'] == @dns_record.ip_address
+    assert response['related_hostnames'].first['hostname'] == 'lorem.com'
+  end
 
   test "should create dns_record" do
     assert_difference('DnsRecord.count') do
