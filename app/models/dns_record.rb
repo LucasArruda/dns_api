@@ -8,7 +8,7 @@ class DnsRecord < ApplicationRecord
     _hostname = Hostname.arel_table
     where.not(Hostname.where(_hostname[:hostname].eq(item)).where(
       'hostnames.dns_record_id = dns_records.id'
-    ).arel.exists)
+    ).exists)
   end
 
   def self.included(item)
@@ -16,7 +16,7 @@ class DnsRecord < ApplicationRecord
     _hostname = Hostname.arel_table
     where(Hostname.where(_hostname[:hostname].eq(item)).where(
       'hostnames.dns_record_id = dns_records.id'
-    ).arel.exists)
+    ).exists)
   end
 
   def ip=(ip_address)
